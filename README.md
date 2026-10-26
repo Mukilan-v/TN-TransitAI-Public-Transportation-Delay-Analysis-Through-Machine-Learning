@@ -1,6 +1,6 @@
-# 🚌 Tamil Nadu Smart Transport AI (TransitAI)
+# 🚌 TN-TransitAI: Public Transportation Delay Analysis Through Machine Learning
 
-A futuristic, high-performance Intelligent Transit & Fleet Optimization Platform tailored specifically for the Tamil Nadu State Transport Corporation (TNSTC) highway road network and commercial fleet operations across all 38 Tamil Nadu districts.
+**TN-TransitAI** is a futuristic, high-performance Intelligent Public Transportation Delay Analysis & Fleet Optimization Platform powered by Machine Learning, tailored specifically for the Tamil Nadu State Transport Corporation (TNSTC) highway road network and commercial fleet operations across all 38 Tamil Nadu districts.
 
 ---
 
