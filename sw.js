@@ -1,5 +1,5 @@
 // TN-TransitAI Service Worker - PWA Offline Support & Cache Management
-const CACHE_NAME = 'tn-transit-ai-v3.0';
+const CACHE_NAME = 'tn-transit-ai-v4.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="not-logged-in">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>TN-TransitAI | Public Transportation Delay Analysis Through Machine Learning</title>
 
-    <!-- Instant Pre-Render Auth Gate: Ensure Login Page comes first on visit -->
+    <!-- Instant Pre-Render Auth Gate: Ensure Login Page comes first unconditionally on visit -->
     <script>
         (function() {
             try {
-                if (!sessionStorage.getItem('tn_session_active')) {
-                    document.documentElement.classList.add('not-logged-in');
-                }
+                document.documentElement.classList.add('not-logged-in');
+                localStorage.removeItem('tn_user');
+                sessionStorage.removeItem('tn_session_active');
             } catch(e) {}
         })();
     </script>
@@ -1113,19 +1113,32 @@
         .modal-overlay.show { display: flex; }
 
         /* Complete isolation for unauthenticated mode: hides all inside app details */
+        html.not-logged-in,
+        body.not-logged-in {
+            overflow: hidden !important;
+            height: 100vh !important;
+            background: #090d16 !important;
+        }
+
         html.not-logged-in body .navbar,
         html.not-logged-in body .main-container,
         html.not-logged-in body .ambient-blob,
+        html.not-logged-in body .mobile-bottom-nav,
         body.not-logged-in .navbar,
         body.not-logged-in .main-container,
-        body.not-logged-in .ambient-blob {
+        body.not-logged-in .ambient-blob,
+        body.not-logged-in .mobile-bottom-nav {
             display: none !important;
         }
 
         html.not-logged-in #authModal,
         body.not-logged-in #authModal {
             display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
             background: #090d16 !important;
+            z-index: 999999 !important;
         }
 
         /* Hide close X button on initial login screen so user must authenticate or pick guest */
@@ -2973,7 +2986,7 @@
         }
     </style>
 </head>
-<body>
+<body class="not-logged-in">
     <div class="ambient-blob blob-1"></div>
     <div class="ambient-blob blob-2"></div>
 
@@ -3478,7 +3491,7 @@
     </div>
 
     <!-- AUTHENTICATION MODAL (SPENDORIO BRIGHT LOOK) -->
-    <div class="modal-overlay" id="authModal" onclick="handleModalBackdropClick(event)">
+    <div class="modal-overlay show" id="authModal" onclick="handleModalBackdropClick(event)">
         <!-- Left Side: Help & Support Feedback Pill -->
         <button type="button" class="spendorio-nav-pill left" onclick="openHelpSupportModal(event)" title="Open Help & Support feedback dialog">
             <i class="fa-solid fa-headset" style="color: #6366f1;"></i>
@@ -5932,16 +5945,25 @@
         let currentUser = null;
 
         function initAuth(isStartup = false) {
-            try {
-                const stored = localStorage.getItem('tn_user');
-                const hasSession = sessionStorage.getItem('tn_session_active');
-                if (stored && hasSession) {
-                    currentUser = JSON.parse(stored);
-                } else {
+            if (isStartup) {
+                // Ensure fresh visit/link click unconditionally lands on the Login Screen
+                currentUser = null;
+                try {
+                    localStorage.removeItem('tn_user');
+                    sessionStorage.removeItem('tn_session_active');
+                } catch (e) {}
+            } else {
+                try {
+                    const stored = localStorage.getItem('tn_user');
+                    const hasSession = sessionStorage.getItem('tn_session_active');
+                    if (stored && hasSession) {
+                        currentUser = JSON.parse(stored);
+                    } else {
+                        currentUser = null;
+                    }
+                } catch (e) {
                     currentUser = null;
                 }
-            } catch (e) {
-                currentUser = null;
             }
 
             const loginBtn = document.getElementById('loginTriggerBtn');
@@ -7312,13 +7334,8 @@
             if (!clockIntervalId) {
                 clockIntervalId = setInterval(updateLiveClock, 1000);
             }
-            // If new visit or fresh tab: ALWAYS display the Login Page first!
-            if (!sessionStorage.getItem('tn_session_active')) {
-                localStorage.removeItem('tn_user');
-                initAuth(true);
-            } else {
-                initAuth(false);
-            }
+            // Unconditionally launch directly into the Login Page first for every visit or link click!
+            initAuth(true);
             detectLiveDistrictWeather();
             calculateRouteAndFleet();
         };
