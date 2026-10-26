@@ -85,78 +85,177 @@
         /* Navigation Bar */
         .navbar {
             position: relative;
-            z-index: 10;
+            z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 35px;
-            background: rgba(11, 17, 30, 0.7);
+            padding: 10px 24px;
+            background: rgba(11, 17, 30, 0.85);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-glass);
+            gap: 12px;
         }
 
         .brand-logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
             color: var(--text-main);
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .brand-icon {
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             background: linear-gradient(135deg, #3b82f6, #06b6d4);
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         }
 
         .brand-text h1 {
-            font-size: 19px;
+            font-size: 17px;
             font-weight: 800;
             letter-spacing: -0.5px;
             background: linear-gradient(to right, #60a5fa, #38bdf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin: 0;
         }
 
         .brand-text span {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-dim);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             display: block;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 6px;
+            flex: 1;
+            overflow-x: auto;
+            scrollbar-width: none;
         }
+        .nav-links::-webkit-scrollbar { display: none; }
 
         .nav-tab-btn {
             background: none;
             border: none;
             color: var(--text-dim);
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 10px;
+            padding: 7px 12px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             font-family: inherit;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .nav-tab-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
         .nav-tab-btn.active { color: #fff; background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); }
+
+        /* Pinned Right Actions (Always on top right) */
+        .nav-right-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .nav-tool-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text-dim);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+        .nav-tool-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+
+        /* Direct Visible Logout Button */
+        .btn-direct-logout {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #f87171;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: inherit;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .btn-direct-logout:hover {
+            background: #ef4444;
+            color: #ffffff;
+            border-color: #ef4444;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+        }
+
+        /* User Pill & Avatar in Navbar */
+        .user-pill {
+            background: rgba(18, 26, 43, 0.9);
+            border: 1.5px solid rgba(56, 189, 248, 0.4);
+            padding: 4px 12px 4px 5px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+            white-space: nowrap;
+        }
+        .user-pill:hover {
+            border-color: #38bdf8;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
+            transform: translateY(-1px);
+        }
+        .user-name-role {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+            text-align: left;
+        }
+        .user-status-pill {
+            font-size: 8.5px;
+            color: #10b981;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
 
         /* Main Container Views (SPA Tabs) */
         .main-container {
@@ -1859,6 +1958,24 @@
             border: 1px solid #e2e8f0;
             color: #0f172a;
         }
+        body.theme-bright .btn-direct-logout, body.bright-theme .btn-direct-logout {
+            background: #fee2e2;
+            border-color: #fca5a5;
+            color: #dc2626;
+        }
+        body.theme-bright .btn-direct-logout:hover, body.bright-theme .btn-direct-logout:hover {
+            background: #ef4444;
+            color: #ffffff;
+        }
+        body.theme-bright .nav-tool-btn, body.bright-theme .nav-tool-btn {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+            color: #475569;
+        }
+        body.theme-bright .nav-tool-btn:hover, body.bright-theme .nav-tool-btn:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
         body.theme-bright .user-menu-box, body.bright-theme .user-menu-box {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -2895,50 +3012,57 @@
             <button class="nav-tab-btn" id="btn-tickets" onclick="switchTab('ticketsTab')">
                 <i class="fa-solid fa-ticket"></i> My Tickets
             </button>
-            <button class="nav-tab-btn" onclick="openUserGuideModal(event)" title="Open User Manual & How to Use Guide">
-                <i class="fa-solid fa-book-open" style="color: #ec4899;"></i> User Guide
+        </div>
+
+        <!-- Pinned Right Navigation Tools & User Authentication Controls -->
+        <div class="nav-right-actions">
+            <!-- Theme Picker Trigger -->
+            <button class="nav-tool-btn" onclick="openThemePickerModal(event)" title="Choose Theme &amp; Color Palette">
+                <i class="fa-solid fa-palette" style="color: #ec4899;"></i>
+                <span>Design</span>
             </button>
-            <button class="nav-tab-btn" onclick="openThemePickerModal(event)" title="Choose Theme & Color Palette (6 Handcrafted Themes)">
-                <i class="fa-solid fa-palette" style="color: #ec4899;"></i> Change Design
+
+            <!-- User Manual Trigger -->
+            <button class="nav-tool-btn" onclick="openUserGuideModal(event)" title="Open User Manual &amp; How to Use Guide">
+                <i class="fa-solid fa-book-open" style="color: #38bdf8;"></i>
+                <span>Guide</span>
             </button>
-            <button class="nav-tab-btn" id="btnInstallPwa" onclick="triggerPwaInstall()" style="color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);" title="Install as App on Phone or Desktop">
-                <i class="fa-solid fa-mobile-screen-button"></i> Install App
+
+            <!-- PWA Install Button (Appears if installable) -->
+            <button class="nav-tool-btn" id="btnInstallPwa" onclick="triggerPwaInstall()" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);" title="Install as App on Phone or Desktop">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+                <span>Install</span>
             </button>
 
             <!-- LIVE DIGITAL TRANSIT CLOCK -->
-            <div class="live-transit-clock" id="liveTransitClockBadge" onclick="toggleClockFormat()" title="Live Indian Standard Time (IST) • Click to toggle 12h / 24h Railway Time">
+            <div class="live-transit-clock" id="liveTransitClockBadge" onclick="toggleClockFormat()" title="Live Indian Standard Time (IST) &bull; Click to toggle 12h / 24h">
                 <span class="live-clock-pulse"></span>
                 <span class="live-clock-time" id="liveClockTime">--:--:--</span>
                 <span class="live-clock-ampm" id="liveClockAmpm">--</span>
                 <span class="live-clock-zone">IST</span>
-                <span class="live-clock-date" id="liveClockDate">--</span>
             </div>
 
-            <!-- User Auth Profile Container (Spendorio Style) -->
-            <div id="authNavContainer" style="margin-left: 10px;">
+            <!-- User Auth Profile Container (ALWAYS PINNED ON TOP RIGHT) -->
+            <div id="authNavContainer" style="display: flex; align-items: center; gap: 8px;">
                 <button class="btn-auth-trigger" id="loginTriggerBtn" onclick="openAuthModal('login')">
-                    <i class="fa-solid fa-user-lock"></i> Login / Sign Up
+                    <i class="fa-solid fa-user-lock"></i> Log In
                 </button>
 
-                <div id="userProfileDropdown" style="display: none; position: relative;">
-                    <div class="user-pill" onclick="toggleUserDropdown()">
-                        <div class="user-avatar" id="navUserAvatar">P</div>
+                <!-- Interactive Profile Pill -->
+                <div class="user-pill" id="userProfileDropdown" onclick="openUserProfileModal()" title="View Account Profile &amp; User Details" style="display: none;">
+                    <div class="user-avatar" id="navUserAvatar">M</div>
+                    <div class="user-name-role">
                         <span id="navUserName">Passenger</span>
-                        <i class="fa-solid fa-chevron-down" style="font-size: 10px; opacity: 0.7;"></i>
+                        <span class="user-status-pill"><i class="fa-solid fa-circle" style="font-size: 5px;"></i> Active</span>
                     </div>
-                    <div class="user-menu-box" id="userMenuBox">
-                        <div style="padding: 14px 16px; border-bottom: 1px solid var(--border-glass);">
-                            <div style="font-weight: 700; color: #fff; font-size: 14px;" id="menuFullName">Verified Passenger</div>
-                            <div style="font-size: 11px; color: var(--text-dim);" id="menuEmail">passenger@tntransport.gov.in</div>
-                            <span class="user-badge-gold"><i class="fa-solid fa-shield-halved"></i> Verified TN Traveler</span>
-                        </div>
-                        <button class="user-menu-item" onclick="switchTab('ticketsTab'); toggleUserDropdown();"><i class="fa-solid fa-ticket"></i> My Booked Tickets</button>
-                        <button class="user-menu-item" onclick="switchTab('dashboardTab'); toggleUserDropdown();"><i class="fa-solid fa-chart-line"></i> Operations Analytics</button>
-                        <button class="user-menu-item" onclick="openThemePickerModal(event); toggleUserDropdown();"><i class="fa-solid fa-palette" style="color: #ec4899;"></i> Color Palette &amp; Themes</button>
-                        <button class="user-menu-item" onclick="openUserGuideModal(event); toggleUserDropdown();"><i class="fa-solid fa-book-open" style="color: #38bdf8;"></i> User Manual Guide</button>
-                        <button class="user-menu-item logout" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</button>
-                    </div>
+                    <i class="fa-solid fa-chevron-down" style="font-size: 9px; opacity: 0.7;"></i>
                 </div>
+
+                <!-- Direct Visible Logout Button -->
+                <button class="btn-direct-logout" id="btnDirectLogout" onclick="handleLogout()" title="Sign Out of Account" style="display: none;">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
             </div>
         </div>
     </nav>
@@ -3685,6 +3809,65 @@
                     Close Support
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- USER PROFILE & ACCOUNT DETAILS MODAL -->
+    <div class="modal-overlay" id="userProfileModal" onclick="closeUserProfileModal()" style="z-index: 100007;">
+        <div class="guide-card" onclick="event.stopPropagation()" style="max-width: 480px; padding: 26px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border-glass); padding-bottom: 16px; margin-bottom: 18px;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <div style="width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #10b981); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; font-weight: 800; box-shadow: 0 4px 18px rgba(59, 130, 246, 0.4); border: 2px solid rgba(255, 255, 255, 0.2);" id="modalUserAvatar">
+                        M
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <h3 style="font-size: 19px; font-weight: 800; margin: 0; color: var(--text-main);" id="modalUserFullName">Mukilan V</h3>
+                            <span class="user-badge-gold" style="margin-top: 0;"><i class="fa-solid fa-shield-halved"></i> Verified</span>
+                        </div>
+                        <p style="font-size: 12.5px; color: var(--text-dim); margin-top: 2px;" id="modalUserEmail">mukilanviswa5839@gmail.com</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close-modal" onclick="closeUserProfileModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Profile Details Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px;">
+                <div class="guide-step-card" style="padding: 10px 12px;">
+                    <div style="font-size: 10.5px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px;">Account Role</div>
+                    <div style="font-size: 12.5px; font-weight: 700; color: #38bdf8; margin-top: 2px;" id="modalUserRole">State Transport Passenger</div>
+                </div>
+                <div class="guide-step-card" style="padding: 10px 12px;">
+                    <div style="font-size: 10.5px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px;">Session Status</div>
+                    <div style="font-size: 12.5px; font-weight: 700; color: #10b981; margin-top: 2px;">🟢 Active &bull; Logged In</div>
+                </div>
+                <div class="guide-step-card" style="padding: 10px 12px;">
+                    <div style="font-size: 10.5px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px;">Registered City</div>
+                    <div style="font-size: 12.5px; font-weight: 700; color: #fbbf24; margin-top: 2px;" id="modalUserHome">Tamil Nadu</div>
+                </div>
+                <div class="guide-step-card" style="padding: 10px 12px;">
+                    <div style="font-size: 10.5px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px;">Phone / Mobile</div>
+                    <div style="font-size: 12.5px; font-weight: 700; color: #a78bfa; margin-top: 2px;" id="modalUserPhone">+91 94432 10987</div>
+                </div>
+            </div>
+
+            <!-- Quick Action Shortcuts -->
+            <div style="display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px;">
+                <button type="button" class="user-menu-item" onclick="closeUserProfileModal(); switchTab('ticketsTab');" style="background: rgba(255, 255, 255, 0.04); border-radius: 8px; font-size: 12.5px; padding: 8px 14px;">
+                    <i class="fa-solid fa-ticket" style="color: #38bdf8;"></i> My Booked Digital E-Tickets
+                </button>
+                <button type="button" class="user-menu-item" onclick="closeUserProfileModal(); switchTab('dashboardTab');" style="background: rgba(255, 255, 255, 0.04); border-radius: 8px; font-size: 12.5px; padding: 8px 14px;">
+                    <i class="fa-solid fa-chart-line" style="color: #10b981;"></i> Fleet Operations Analytics
+                </button>
+                <button type="button" class="user-menu-item" onclick="closeUserProfileModal(); openThemePickerModal(event);" style="background: rgba(255, 255, 255, 0.04); border-radius: 8px; font-size: 12.5px; padding: 8px 14px;">
+                    <i class="fa-solid fa-palette" style="color: #ec4899;"></i> Switch Design Theme (6 Palettes)
+                </button>
+            </div>
+
+            <!-- Prominent Red Sign Out / Logout Button -->
+            <button type="button" onclick="closeUserProfileModal(); handleLogout();" style="width: 100%; padding: 12px; border-radius: 12px; background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; border: none; font-size: 13.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); transition: all 0.2s;">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out / Logout
+            </button>
         </div>
     </div>
 
@@ -5768,11 +5951,14 @@
             const menuEmail = document.getElementById('menuEmail');
             const mobileAuthLabel = document.getElementById('mobileAuthLabel');
 
+            const directLogout = document.getElementById('btnDirectLogout');
+
             if (currentUser && currentUser.name) {
                 document.documentElement.classList.remove('not-logged-in');
                 document.body.classList.remove('not-logged-in');
                 if (loginBtn) loginBtn.style.display = 'none';
-                if (profileDrop) profileDrop.style.display = 'block';
+                if (profileDrop) profileDrop.style.display = 'inline-flex';
+                if (directLogout) directLogout.style.display = 'inline-flex';
 
                 const firstName = currentUser.name.trim().split(' ')[0];
                 const initial = currentUser.name.trim().charAt(0).toUpperCase();
@@ -5787,6 +5973,7 @@
                 document.body.classList.add('not-logged-in');
                 if (loginBtn) loginBtn.style.display = 'inline-flex';
                 if (profileDrop) profileDrop.style.display = 'none';
+                if (directLogout) directLogout.style.display = 'none';
                 if (mobileAuthLabel) mobileAuthLabel.innerText = 'Login';
                 openAuthModal('login');
             }
@@ -6752,6 +6939,7 @@
         }
 
         function handleLogout() {
+            closeUserProfileModal();
             localStorage.removeItem('tn_user');
             currentUser = null;
             clearAuthInputs();
@@ -6780,12 +6968,42 @@
             }
         });
 
+        function openUserProfileModal() {
+            if (!currentUser) {
+                openAuthModal('login');
+                return;
+            }
+            const nameEl = document.getElementById('modalUserFullName');
+            const emailEl = document.getElementById('modalUserEmail');
+            const avatarEl = document.getElementById('modalUserAvatar');
+            const roleEl = document.getElementById('modalUserRole');
+            const homeEl = document.getElementById('modalUserHome');
+            const phoneEl = document.getElementById('modalUserPhone');
+
+            const name = currentUser.name || 'TN Passenger';
+            const email = currentUser.email || (currentUser.username ? `${currentUser.username}@tntransport.gov.in` : 'passenger@tntransport.gov.in');
+            const initial = name.trim().charAt(0).toUpperCase();
+            const role = currentUser.role || (currentUser.isGuest ? 'Guest Traveler' : 'Verified State Traveler');
+
+            if (nameEl) nameEl.innerText = name;
+            if (emailEl) emailEl.innerText = email;
+            if (avatarEl) avatarEl.innerText = initial;
+            if (roleEl) roleEl.innerText = role;
+            if (homeEl) homeEl.innerText = currentUser.home || 'Tamil Nadu';
+            if (phoneEl) phoneEl.innerText = currentUser.phone || '+91 94432 10987';
+
+            const modal = document.getElementById('userProfileModal');
+            if (modal) modal.classList.add('show');
+        }
+
+        function closeUserProfileModal() {
+            const modal = document.getElementById('userProfileModal');
+            if (modal) modal.classList.remove('show');
+        }
+
         function handleMobileAuthClick() {
             if (currentUser) {
-                const action = confirm(`Signed in as: ${currentUser.name}\nEmail: ${currentUser.email}\nHome: ${currentUser.home || 'TN'}\n\nDo you want to log out?`);
-                if (action) {
-                    handleLogout();
-                }
+                openUserProfileModal();
             } else {
                 openAuthModal('login');
             }
