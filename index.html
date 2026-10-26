@@ -215,6 +215,55 @@
             }
         }
 
+        /* Small Compact Live Clock in Navbar */
+        .live-transit-clock-small {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            padding: 3px 8px;
+            border-radius: 16px;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+        .live-transit-clock-small:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+        .live-transit-clock-small .live-clock-pulse {
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 6px #10b981;
+            animation: pulseDot 2s infinite;
+        }
+        .live-transit-clock-small .live-clock-time {
+            font-family: 'Rajdhani', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: #38bdf8;
+            letter-spacing: 0.5px;
+        }
+        .live-transit-clock-small .live-clock-ampm {
+            font-size: 9px;
+            font-weight: 800;
+            color: #fbbf24;
+            background: rgba(245, 158, 11, 0.15);
+            padding: 1px 4px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 1050px) {
+            .live-transit-clock-small {
+                display: none !important;
+            }
+        }
+
         /* Pinned Right Actions (Always on top right) */
         .nav-right-actions {
             display: flex;
@@ -3068,6 +3117,13 @@
 
         <!-- Pinned Right Navigation Tools & User Authentication Controls -->
         <div class="nav-right-actions">
+            <!-- Small Compact Live Transit Clock -->
+            <div class="live-transit-clock-small" id="liveTransitClockBadge" onclick="toggleClockFormat()" title="Live Indian Standard Time (IST) &bull; Tap to switch 12h / 24h format">
+                <span class="live-clock-pulse"></span>
+                <span class="live-clock-time" id="liveClockTime">--:--:--</span>
+                <span class="live-clock-ampm" id="liveClockAmpm">--</span>
+            </div>
+
             <!-- User Auth Profile Container (ALWAYS PINNED ON TOP RIGHT) -->
             <div id="authNavContainer" style="display: flex; align-items: center; gap: 8px;">
                 <button class="btn-auth-trigger" id="loginTriggerBtn" onclick="openAuthModal('login')">
