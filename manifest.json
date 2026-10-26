@@ -1,0 +1,45 @@
+{
+  "name": "TN-TransitAI: Public Transportation Delay Analysis",
+  "short_name": "TN-TransitAI",
+  "description": "Tamil Nadu State Smart Bus Transit, Delay Prediction & Live Radar Telemetry",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#090d16",
+  "theme_color": "#0284c7",
+  "scope": "./",
+  "lang": "en-IN",
+  "categories": ["transportation", "travel", "utilities"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Route Planner",
+      "url": "./index.html#planner",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Live Bus Radar",
+      "url": "./index.html#fleet",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

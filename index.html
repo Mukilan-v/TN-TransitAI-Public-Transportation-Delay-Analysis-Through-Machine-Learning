@@ -17,11 +17,13 @@
     </script>
 
     <!-- PWA & Mobile Meta Tags -->
-    <meta name="theme-color" content="#1e3a8a">
+    <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="icon" type="image/png" href="tn_transport_ai/static/icons/icon-192.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="manifest" href="manifest.json">
 
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
@@ -2898,6 +2900,9 @@
             </button>
             <button class="nav-tab-btn" onclick="openThemePickerModal(event)" title="Choose Theme & Color Palette (6 Handcrafted Themes)">
                 <i class="fa-solid fa-palette" style="color: #ec4899;"></i> Change Design
+            </button>
+            <button class="nav-tab-btn" id="btnInstallPwa" onclick="triggerPwaInstall()" style="color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.1);" title="Install as App on Phone or Desktop">
+                <i class="fa-solid fa-mobile-screen-button"></i> Install App
             </button>
 
             <!-- LIVE DIGITAL TRANSIT CLOCK -->
@@ -7016,6 +7021,55 @@
             if (typeof showToast === 'function') {
                 showToast(`🚌 📢 Pomp Pomp! SETC Super Express (TN 01 AN 7892) cruising at ${randSpd} km/h on NH 45 Grand Southern Trunk Road!`);
             }
+        }
+
+        // ==========================================
+        // PWA SERVICE WORKER & APP INSTALL ENGINE
+        // ==========================================
+        let deferredPwaPrompt = null;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPwaPrompt = e;
+            const btn = document.getElementById('btnInstallPwa');
+            if (btn) {
+                btn.style.display = 'inline-flex';
+            }
+        });
+
+        window.addEventListener('appinstalled', () => {
+            deferredPwaPrompt = null;
+            if (typeof showToast === 'function') {
+                showToast('🎉 TN-TransitAI successfully installed as an app on your device!');
+            }
+        });
+
+        function triggerPwaInstall() {
+            if (deferredPwaPrompt) {
+                deferredPwaPrompt.prompt();
+                deferredPwaPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the PWA install prompt');
+                    }
+                    deferredPwaPrompt = null;
+                });
+            } else {
+                const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                if (isIos) {
+                    alert('📲 To install on iPhone / iPad:\n1. Tap the Share button (square with arrow ⎋) at the bottom.\n2. Scroll down and tap "Add to Home Screen" ➕.\n3. Tap "Add" in the top right corner.');
+                } else {
+                    alert('📲 To install TN-TransitAI as an App:\n• On Android Phone: Tap the 3 dots (⋮) in Chrome > tap "Install app" or "Add to Home screen".\n• On Desktop (Chrome/Edge): Click the Install icon in the address bar (top right) or Menu > "Install TN-TransitAI".');
+                }
+            }
+        }
+
+        // Service Worker registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((reg) => console.log('TN-TransitAI PWA ServiceWorker active:', reg.scope))
+                    .catch((err) => console.log('ServiceWorker note:', err));
+            });
         }
 
         // Initialize application on load
