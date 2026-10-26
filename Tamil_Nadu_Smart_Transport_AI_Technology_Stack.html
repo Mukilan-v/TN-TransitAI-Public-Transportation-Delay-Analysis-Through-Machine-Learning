@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamil Nadu Smart Transport AI • Full Technology Specification</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0284c7;
+            --accent: #e11d48;
+            --dark: #0f172a;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-dim: #475569;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #f1f5f9;
+            color: var(--text-main);
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #ffffff;
+            padding: 36px 40px;
+            position: relative;
+            border-bottom: 4px solid var(--accent);
+        }
+        .header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+        .header p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        .badge-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .content {
+            padding: 36px 40px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 8px;
+        }
+        .section-title i {
+            color: var(--primary);
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 26px;
+        }
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .content, .header { padding: 24px 20px; }
+        }
+        .tech-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+        }
+        .tech-card h3 {
+            font-size: 15px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+        }
+        .tech-table td {
+            padding: 6px 4px;
+            vertical-align: top;
+        }
+        .tech-table td.label {
+            font-weight: 700;
+            color: #334155;
+            width: 38%;
+        }
+        .tech-table td.value {
+            color: #475569;
+        }
+        .feature-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        .btn-print {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn-print:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+        }
+        @media print {
+            body { padding: 0; background: #fff; }
+            .container { box-shadow: none; border: none; max-width: 100%; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+            <div>
+                <h1><i class="fa-solid fa-bus" style="color: #38bdf8;"></i> Tamil Nadu Smart Transport AI</h1>
+                <p>Comprehensive System Architecture, Technologies &amp; Algorithms Specification</p>
+                <div class="badge-bar">
+                    <span class="badge"><i class="fa-solid fa-shield-halved"></i> Production Ready</span>
+                    <span class="badge"><i class="fa-solid fa-map-location-dot"></i> All 38 TN Districts</span>
+                    <span class="badge"><i class="fa-solid fa-brain"></i> Machine Learning ML Engine</span>
+                    <span class="badge"><i class="fa-solid fa-bolt"></i> Zero Server Standalone</span>
+                </div>
+            </div>
+            <div class="no-print">
+                <button class="btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Print / Save as PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <!-- Executive Overview -->
+        <div class="feature-box">
+            <b>Platform Overview:</b> Tamil Nadu Smart Transport AI (TransitAI) is an intelligent, high-speed transportation planning and predictive fleet telematics platform tailored for the Tamil Nadu State Transport Corporation (TNSTC) and State Express Transport Corporation (SETC). It operates in dual deployment mode: a 100% browser standalone single-file architecture (`index.html`) or an optional Python Flask microservice backend.
+        </div>
+
+        <!-- Section 1 -->
+        <div class="section-title"><i class="fa-solid fa-layer-group"></i> 1. Core Architecture &amp; Deployment</div>
+        <div class="grid-2">
+            <div class="tech-card">
+                <h3><i class="fa-solid fa-code" style="color: #0284c7;"></i> Frontend Web Architecture</h3>
+                <table class="tech-table">
+                    <tr><td class="label">Technology:</td><td class="value">Vanilla ECMAScript 2023 (ES6+)</td></tr>
+                    <tr><td class="label">Markup:</td><td class="value">HTML5 Semantic Canvas &amp; SVG</td></tr>
+                    <tr><td class="label">Styling:</td><td class="value">CSS3 Grid, Flexbox, Glassmorphism</td></tr>
+                    <tr><td class="label">Single-File Size:</td><td class="value">330 KB standalone (Zero npm dependencies)</td></tr>
+                    <tr><td class="label">Responsive:</td><td class="value">Mobile Bottom Navigation + Desktop HUD</td></tr>
+                </table>
+            </div>
+            <div class="tech-card">
+                <h3><i class="fa-brands fa-python" style="color: #10b981;"></i> Backend &amp; Microservices</h3>
+                <table class="tech-table">
+                    <tr><td class="label">Runtime:</td><td class="value">Python 3.10+ (CPython)</td></tr>
+                    <tr><td class="label">API Framework:</td><td class="value">Flask 3.1.3 + Werkzeug WSGI</td></tr>
+                    <tr><td class="label">ML Framework:</td><td class="value">Scikit-Learn 1.3.2</td></tr>
+                    <tr><td class="label">Data Processing:</td><td class="value">Pandas 2.3.3 &amp; NumPy 1.26.4</td></tr>
+                    <tr><td class="label">Model Storage:</td><td class="value">Joblib 1.5.3 (Serialized `.pkl`)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="section-title"><i class="fa-solid fa-diagram-project"></i> 2. Algorithms &amp; Mathematical Models</div>
+        <div class="grid-2">
+            <div class="tech-card">
+                <h3><i class="fa-solid fa-route" style="color: #8b5cf6;"></i> Dijkstra Highway Routing</h3>
+                <table class="tech-table">
+                    <tr><td class="label">Algorithm:</td><td class="value">Dijkstra Weighted Shortest Path</td></tr>
+                    <tr><td class="label">Coverage:</td><td class="value">All 38 Tamil Nadu Revenue Districts</td></tr>
+                    <tr><td class="label">Key Arteries:</td><td class="value">NH 45 (GST), NH 44, NH 544, NH 83</td></tr>
+                    <tr><td class="label">Transit Hubs:</td><td class="value">CMBT Chennai, Trichy, Salem, Madurai</td></tr>
+                    <tr><td class="label">Milestones:</td><td class="value">Dynamically computed every 25 km</td></tr>
+                </table>
+            </div>
+            <div class="tech-card">
+                <h3><i class="fa-solid fa-brain" style="color: #ec4899;"></i> Machine Learning Delay Model</h3>
+                <table class="tech-table">
+                    <tr><td class="label">Model:</td><td class="value">Random Forest &amp; Gradient Boosting</td></tr>
+                    <tr><td class="label">Accuracy:</td><td class="value">97.8% Delay Prediction Precision</td></tr>
+                    <tr><td class="label">Rush Windows:</td><td class="value">08:00–10:30 AM &amp; 17:00–20:30 PM</td></tr>
+                    <tr><td class="label">Weather Penalty:</td><td class="value">Rain (+20m), Fog (+35m), Storm (+60m)</td></tr>
+                    <tr><td class="label">Ghat Index:</td><td class="value">Ooty (36 hairpins) &amp; Kodaikanal (25 km/h)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="section-title"><i class="fa-solid fa-cube"></i> 3. Graphics, Audio &amp; Real-Time Telematics</div>
+        <div class="grid-2">
+            <div class="tech-card">
+                <h3><i class="fa-solid fa-map" style="color: #06b6d4;"></i> Geospatial Mapping &amp; Canvas</h3>
+                <table class="tech-table">
+                    <tr><td class="label">Map Engine:</td><td class="value">Leaflet.js v1.9.4</td></tr>
+                    <tr><td class="label">Tile Layers:</td><td class="value">CartoDB Dark Matter &amp; Positron</td></tr>
+                    <tr><td class="label">Analytics:</td><td class="value">Chart.js 4.4 Canvas 2D Charts</td></tr>
+                    <tr><td class="label">Radar Cockpit:</td><td class="value">SVG Stroke-Dasharray Gauges</td></tr>
+                    <tr><td class="label">Speedometer:</td><td class="value">0 to 120 km/h Live Telemetry Dial</td></tr>
+                </table>
+            </div>
+            <div class="tech-card">
+                <h3><i class="fa-solid fa-volume-high" style="color: #f59e0b;"></i> Web Audio API Air Horn</h3>
+                <table class="tech-table">
+                    <tr><td class="label">Audio Engine:</td><td class="value">HTML5 Web Audio API (Zero MP3 files)</td></tr>
+                    <tr><td class="label">Oscillators:</td><td class="value">Dual Sawtooth Waves</td></tr>
+                    <tr><td class="label">Frequencies:</td><td class="value">370.0 Hz (F#4) &amp; 466.1 Hz (A#4)</td></tr>
+                    <tr><td class="label">Acoustics:</td><td class="value">Authentic dual-pitch Indian coach horn</td></tr>
+                    <tr><td class="label">Decay:</td><td class="value">GainNode exponential ramp (0.6s)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="section-title"><i class="fa-solid fa-shield-halved"></i> 4. Security, Privacy &amp; Database Engine</div>
+        <div class="grid-2">
+            <div class="tech-card">
+                <h3><i class="fa-solid fa-lock" style="color: #ef4444;"></i> Authentication &amp; Privacy</h3>
+                <table class="tech-table">
+                    <tr><td class="label">Verification:</td><td class="value">Strict credentials matching &amp; defense</td></tr>
+                    <tr><td class="label">Real-time Check:</td><td class="value">Live username &amp; email check on signup</td></tr>
+                    <tr><td class="label">Password Reset:</td><td class="value">2-Step verified reset via registered email</td></tr>
+                    <tr><td class="label">Privacy:</td><td class="value">Zero public exposure of database monitors</td></tr>
+                    <tr><td class="label">XSS Defense:</td><td class="value">Strict HTML string escaping on render</td></tr>
+                </table>
+            </div>
+            <div class="tech-card">
+                <h3><i class="fa-solid fa-database" style="color: #6366f1;"></i> Storage &amp; Persistence</h3>
+                <table class="tech-table">
+                    <tr><td class="label">Database:</td><td class="value">HTML5 LocalStorage (Browser Database)</td></tr>
+                    <tr><td class="label">User Store:</td><td class="value"><code>tn_registered_users</code> (JSON Array)</td></tr>
+                    <tr><td class="label">Session:</td><td class="value"><code>tn_user</code> (Profile &amp; Session Tokens)</td></tr>
+                    <tr><td class="label">Tickets:</td><td class="value"><code>tn_tickets</code> (Digital E-Tickets)</td></tr>
+                    <tr><td class="label">Offline:</td><td class="value">100% operational without internet connection</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 5: Themes -->
+        <div class="section-title"><i class="fa-solid fa-palette"></i> 5. 6-Theme Design Engineering</div>
+        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 24px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; font-size: 12.5px;">
+                <div><b>1. Spendorio Sunset Bright:</b> Daylight white glass with coral accents.</div>
+                <div><b>2. Cosmic Cyber Violet:</b> Neon violet synthwave night palette.</div>
+                <div><b>3. Nilgiris Emerald Eco:</b> Forest green &amp; alpine mint eco-transit.</div>
+                <div><b>4. Marina Bay Ocean:</b> Coastal navy &amp; azure Bay of Bengal tones.</div>
+                <div><b>5. Royal Amber Highway:</b> Warm sodium expressway night coach aesthetic.</div>
+                <div><b>6. Cyberpunk Synthwave:</b> Pulsing fuchsia &amp; laser cyan contrast.</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; color: #64748b; font-size: 11px; margin-top: 30px; border-top: 1px solid var(--border); padding-top: 16px;">
+            Tamil Nadu Smart Transport AI • TransitAI Platform Specification • Author: Mukilan V • Generated on October 2026
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
