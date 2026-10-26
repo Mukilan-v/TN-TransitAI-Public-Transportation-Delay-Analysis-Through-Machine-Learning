@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>TN-TransitAI | Public Transportation Delay Analysis Through Machine Learning</title>
 
-    <!-- Instant Pre-Render Auth Gate: Prevents inside details leak on refresh -->
+    <!-- Instant Pre-Render Auth Gate: Ensure Login Page comes first on visit -->
     <script>
         (function() {
             try {
-                if (!localStorage.getItem('tn_user')) {
+                if (!sessionStorage.getItem('tn_session_active')) {
                     document.documentElement.classList.add('not-logged-in');
                 }
             } catch(e) {}
@@ -5934,7 +5934,8 @@
         function initAuth(isStartup = false) {
             try {
                 const stored = localStorage.getItem('tn_user');
-                if (stored) {
+                const hasSession = sessionStorage.getItem('tn_session_active');
+                if (stored && hasSession) {
                     currentUser = JSON.parse(stored);
                 } else {
                     currentUser = null;
@@ -6058,6 +6059,7 @@
         function continueAsGuest() {
             currentUser = { name: "Guest Traveler", email: "guest@tntransport.gov.in", isGuest: true };
             localStorage.setItem('tn_user', JSON.stringify(currentUser));
+            sessionStorage.setItem('tn_session_active', 'true');
             document.documentElement.classList.remove('not-logged-in');
             document.body.classList.remove('not-logged-in');
             initAuth(false);
@@ -6313,6 +6315,9 @@
                 loggedInAt: new Date().toLocaleTimeString()
             };
             localStorage.setItem('tn_user', JSON.stringify(currentUser));
+            sessionStorage.setItem('tn_session_active', 'true');
+            document.documentElement.classList.remove('not-logged-in');
+            document.body.classList.remove('not-logged-in');
 
             clearAuthInputs();
             hideAuthErrors();
@@ -6499,6 +6504,9 @@
                 loggedInAt: new Date().toLocaleTimeString()
             };
             localStorage.setItem('tn_user', JSON.stringify(currentUser));
+            sessionStorage.setItem('tn_session_active', 'true');
+            document.documentElement.classList.remove('not-logged-in');
+            document.body.classList.remove('not-logged-in');
 
             clearAuthInputs();
             hideAuthErrors();
@@ -6933,6 +6941,9 @@
                 role: demo.role
             };
             localStorage.setItem('tn_user', JSON.stringify(currentUser));
+            sessionStorage.setItem('tn_session_active', 'true');
+            document.documentElement.classList.remove('not-logged-in');
+            document.body.classList.remove('not-logged-in');
             initAuth(false);
             closeAuthModal();
             showToast("⚡ 1-Click Demo Login Successful!");
@@ -6941,12 +6952,15 @@
         function handleLogout() {
             closeUserProfileModal();
             localStorage.removeItem('tn_user');
+            sessionStorage.removeItem('tn_session_active');
             currentUser = null;
             clearAuthInputs();
             hideAuthErrors();
             const menu = document.getElementById('userMenuBox');
             if (menu) menu.classList.remove('show');
-            initAuth(false);
+            document.documentElement.classList.add('not-logged-in');
+            document.body.classList.add('not-logged-in');
+            initAuth(true);
             switchTab('plannerTab');
             openAuthModal('login');
             showToast("👋 Signed out successfully. Please log in.");
@@ -7298,7 +7312,13 @@
             if (!clockIntervalId) {
                 clockIntervalId = setInterval(updateLiveClock, 1000);
             }
-            initAuth(false);
+            // If new visit or fresh tab: ALWAYS display the Login Page first!
+            if (!sessionStorage.getItem('tn_session_active')) {
+                localStorage.removeItem('tn_user');
+                initAuth(true);
+            } else {
+                initAuth(false);
+            }
             detectLiveDistrictWeather();
             calculateRouteAndFleet();
         };
