@@ -16,13 +16,18 @@
         })();
     </script>
 
-    <!-- PWA & Mobile Meta Tags -->
+    <!-- PWA, iOS & Android Mobile Meta Tags -->
     <meta name="theme-color" content="#0284c7">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TN-TransitAI">
+    <meta name="application-name" content="TN-TransitAI">
+    <meta name="format-detection" content="telephone=no">
     <link rel="icon" type="image/png" href="icons/icon-192.png">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
     <link rel="manifest" href="manifest.json">
 
     <!-- Fonts & Icons -->
@@ -53,7 +58,12 @@
             --danger: #ef4444;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -65,7 +75,8 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            padding-bottom: 75px;
+            padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px));
+            touch-action: manipulation;
         }
 
         /* Ambient Blobs */
@@ -89,7 +100,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 16px;
+            padding: max(8px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px));
             background: rgba(11, 17, 30, 0.88);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-glass);
@@ -256,6 +267,59 @@
             background: rgba(245, 158, 11, 0.15);
             padding: 1px 4px;
             border-radius: 4px;
+        }
+
+        /* Network Status Indicator Badge */
+        .network-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 9px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: #34d399;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+            transition: all 0.25s ease;
+            flex-shrink: 0;
+        }
+        .network-status-badge:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.6);
+        }
+        .network-status-badge.offline {
+            background: rgba(245, 158, 11, 0.16);
+            border-color: rgba(245, 158, 11, 0.45);
+            color: #fbbf24;
+        }
+        .network-status-badge.offline:hover {
+            background: rgba(245, 158, 11, 0.25);
+            border-color: rgba(245, 158, 11, 0.7);
+        }
+        .net-pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 6px #10b981;
+            display: inline-block;
+            animation: pulseDot 2s infinite;
+        }
+        .network-status-badge.offline .net-pulse-dot {
+            background: #f59e0b;
+            box-shadow: 0 0 6px #f59e0b;
+        }
+        @media (max-width: 600px) {
+            .network-status-badge .net-status-text {
+                display: none;
+            }
+            .network-status-badge {
+                padding: 4px 6px;
+            }
         }
 
         @media (max-width: 1050px) {
@@ -1059,14 +1123,15 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 65px;
+            height: calc(65px + env(safe-area-inset-bottom, 0px));
             background: rgba(11, 17, 30, 0.95);
             backdrop-filter: blur(20px);
             border-top: 1px solid var(--border-glass);
             z-index: 100;
             justify-content: space-around;
             align-items: center;
-            padding: 0 10px;
+            padding: 0 10px env(safe-area-inset-bottom, 0px) 10px;
+            touch-action: manipulation;
         }
 
         .mobile-nav-item {
@@ -3257,6 +3322,10 @@
             .bus-card-grid { grid-template-columns: 1fr; }
             .weather-grid { grid-template-columns: repeat(2, 1fr); }
             #mapContainer { height: 350px; }
+            /* iOS Safari input auto-zoom prevention: enforce 16px on mobile viewports */
+            input, select, textarea {
+                font-size: 16px !important;
+            }
         }
     </style>
 </head>
@@ -3303,6 +3372,12 @@
 
         <!-- Pinned Right Navigation Tools & User Authentication Controls -->
         <div class="nav-right-actions">
+            <!-- Compact Online/Offline Network Status Pill -->
+            <div class="network-status-badge" id="networkStatusBadge" onclick="showNetworkStatusToast()" title="Network &amp; PWA Offline Status">
+                <span class="net-pulse-dot" id="netPulseDot"></span>
+                <span class="net-status-text" id="netStatusText">Online</span>
+            </div>
+
             <!-- Small Compact Live Transit Clock -->
             <div class="live-transit-clock-small" id="liveTransitClockBadge" onclick="toggleClockFormat()" title="Live Indian Standard Time (IST) &bull; Tap to switch 12h / 24h format">
                 <span class="live-clock-pulse"></span>
@@ -5784,6 +5859,19 @@
         }
 
         function renderMap() {
+            if (typeof L === 'undefined') {
+                const mapContainer = document.getElementById('mapContainer');
+                if (mapContainer && !mapContainer.querySelector('.offline-map-placeholder')) {
+                    mapContainer.innerHTML = `
+                        <div class="offline-map-placeholder" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;min-height:300px;background:rgba(15,23,42,0.85);color:#94a3b8;border-radius:12px;text-align:center;padding:25px;">
+                            <i class="fa-solid fa-satellite-dish" style="font-size:38px;color:#3b82f6;margin-bottom:14px;"></i>
+                            <h4 style="color:#f8fafc;font-size:16px;margin-bottom:6px;">GPS Map Cockpit &bull; Offline Mode</h4>
+                            <p style="font-size:13px;max-width:340px;line-height:1.5;">Local route calculations and speed telemetry are active. Interactive satellite tiles will load once internet or Wi-Fi is reconnected.</p>
+                        </div>
+                    `;
+                }
+                return;
+            }
             if (!currentRoute) return;
 
             initRouteGeometry();
@@ -6093,6 +6181,10 @@
         let chartCorridorInstance = null;
 
         function renderDashboardCharts() {
+            if (typeof Chart === 'undefined') {
+                console.warn("Chart.js is loading or offline. Metric cards remain fully operational.");
+                return;
+            }
             if (!chartWeatherInstance) {
                 const ctxW = document.getElementById('chartWeather').getContext('2d');
                 chartWeatherInstance = new Chart(ctxW, {
@@ -7695,6 +7787,9 @@
                 const AudioCtx = window.AudioContext || window.webkitAudioContext;
                 if (AudioCtx) {
                     const ctx = new AudioCtx();
+                    if (ctx.state === 'suspended') {
+                        ctx.resume();
+                    }
                     const osc1 = ctx.createOscillator();
                     const osc2 = ctx.createOscillator();
                     const gain = ctx.createGain();
@@ -7770,6 +7865,42 @@
             }
         }
 
+        // Live Network and Offline PWA Status Monitor
+        function updateNetworkStatus() {
+            const isOnline = navigator.onLine;
+            const badge = document.getElementById('networkStatusBadge');
+            const text = document.getElementById('netStatusText');
+            if (badge && text) {
+                if (isOnline) {
+                    badge.classList.remove('offline');
+                    text.textContent = 'Online';
+                    badge.title = 'Internet Connected • Real-time Cloud Telemetry Active';
+                } else {
+                    badge.classList.add('offline');
+                    text.textContent = 'Offline PWA';
+                    badge.title = 'Offline Mode Active • Running 100% Seamlessly from Local PWA Cache';
+                }
+            }
+        }
+
+        function showNetworkStatusToast() {
+            if (navigator.onLine) {
+                showToast('🌐 Online • Connected to Live Telemetry & OpenMeteo Feeds');
+            } else {
+                showToast('⚡ Offline Mode Active • Zero-WiFi PWA Cache Engaged');
+            }
+        }
+
+        window.addEventListener('online', () => {
+            updateNetworkStatus();
+            showToast('🌐 Network Reconnected • Live Telemetry Resumed');
+        });
+
+        window.addEventListener('offline', () => {
+            updateNetworkStatus();
+            showToast('⚡ Offline Mode Active • Zero-WiFi PWA Cache Engaged');
+        });
+
         // Service Worker registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -7784,6 +7915,7 @@
             initTheme();
             initDropdowns();
             updateLiveClock();
+            updateNetworkStatus();
             if (!clockIntervalId) {
                 clockIntervalId = setInterval(updateLiveClock, 1000);
             }
