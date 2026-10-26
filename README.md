@@ -74,22 +74,24 @@
 ## 📁 Repository Structure
 
 ```
-├── index.html                   # Complete Standalone Single-File Web Application
-├── README.md                    # Project Documentation
-├── .gitignore                   # Git Ignore Configuration
-├── run.bat                      # One-click Windows starter
-├── run.py                       # Python runner script
-└── tn_transport_ai/             # Flask Backend & Machine Learning Engine
-    ├── app.py                   # Flask REST API Server
-    ├── fleet_engine.py          # Real-time Fleet Simulation & Dispatch Engine
-    ├── route_engine.py          # Highway Routing & Dijkstra Algorithm
-    ├── weather_engine.py        # Weather Sourcing & Road Condition Logic
-    ├── traffic_engine.py        # Rush Hour & Congestion Multipliers
-    ├── train_model.py           # ML Model Training Pipeline
-    ├── data/                    # Tamil Nadu District Coordinates & CSV Datasets
-    ├── models/                  # Trained Machine Learning Model (.pkl)
-    ├── templates/               # Jinja2 HTML Templates
-    └── static/                  # CSS, Icons, PWA Manifest, and Images
+├── index.html                                        # Complete Standalone Single-File Web Application
+├── Tamil_Nadu_Smart_Transport_AI_Technology_Stack.pdf # Official 5-Page Technical Specification & Whitepaper (PDF)
+├── Tamil_Nadu_Smart_Transport_AI_Technology_Stack.html# Interactive Architecture & Technology Specification (HTML)
+├── README.md                                         # Project Documentation
+├── .gitignore                                        # Git Ignore Configuration
+├── run.bat                                           # One-click Windows starter
+├── run.py                                            # Python runner script
+└── tn_transport_ai/                                  # Flask Backend & Machine Learning Engine
+    ├── app.py                                        # Flask REST API Server
+    ├── fleet_engine.py                               # Real-time Fleet Simulation & Dispatch Engine
+    ├── route_engine.py                               # Highway Routing & Dijkstra Algorithm
+    ├── weather_engine.py                             # Weather Sourcing & Road Condition Logic
+    ├── traffic_engine.py                             # Rush Hour & Congestion Multipliers
+    ├── train_model.py                                # ML Model Training Pipeline
+    ├── data/                                         # Tamil Nadu District Coordinates & CSV Datasets
+    ├── models/                                       # Trained Machine Learning Model (.pkl)
+    ├── templates/                                    # Jinja2 HTML Templates
+    └── static/                                       # CSS, Icons, PWA Manifest, and Images
 ```
 
 ---
