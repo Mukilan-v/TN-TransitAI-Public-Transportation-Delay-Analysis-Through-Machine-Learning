@@ -1229,6 +1229,13 @@
             z-index: 99999 !important;
         }
 
+        #authModal:not(.show) {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
         /* Ensure all sub-dialogs (guide, support, reset pass, themes, profile, monitor)
            render above the auth modal with high z-index and active pointer events */
         #userGuideModal,
@@ -6458,14 +6465,31 @@
         }
 
         function continueAsGuest() {
-            currentUser = { name: "Guest Traveler", email: "guest@tntransport.gov.in", isGuest: true };
-            localStorage.setItem('tn_user', JSON.stringify(currentUser));
-            sessionStorage.setItem('tn_session_active', 'true');
+            currentUser = { 
+                name: "Guest Traveler", 
+                username: "guest",
+                email: "guest@tntransport.gov.in", 
+                role: "Guest Passenger",
+                home: "Chennai",
+                isGuest: true 
+            };
+            try {
+                localStorage.setItem('tn_user', JSON.stringify(currentUser));
+                sessionStorage.setItem('tn_session_active', 'true');
+            } catch (e) {}
+
             document.documentElement.classList.remove('not-logged-in');
             document.body.classList.remove('not-logged-in');
+
             initAuth(false);
+            closeAuthModal();
+
             const modal = document.getElementById('authModal');
-            if (modal) modal.classList.remove('show');
+            if (modal) {
+                modal.classList.remove('show');
+                modal.style.display = 'none';
+            }
+
             clearAuthInputs();
             hideAuthErrors();
             showToast("👋 Welcome, Guest Traveler!");
